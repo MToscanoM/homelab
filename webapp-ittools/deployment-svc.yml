@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: it-tools
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: it-tools
+  template:
+    metadata:
+      labels:
+        app: it-tools
+    spec:
+      containers:
+      - name: it-tools
+        image: corentinth/it-tools:latest
+        ports:
+        - containerPort: 80
+      restartPolicy: Always # Equivalente a --restart unless-stopped en Docker
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: it-tools-service
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: it-tools
