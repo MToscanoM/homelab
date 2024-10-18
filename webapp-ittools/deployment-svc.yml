@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: it-tools
-        image: corentinth/it-tools:latest
+        image: corentinth/it-tools:nightly
         ports:
         - containerPort: 80
       restartPolicy: Always # Equivalente a --restart unless-stopped en Docker
@@ -24,9 +24,11 @@ kind: Service
 metadata:
   name: it-tools-service
 spec:
-  type: ClusterIP
-  ports:
-  - port: 80
-    targetPort: 80
   selector:
     app: it-tools
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+
+

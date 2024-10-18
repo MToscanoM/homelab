@@ -6,17 +6,19 @@ metadata:
   name: ittools-ingress
   namespace: default
   annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
+  ingressClassName: nginx
   rules:
-  - host: megadrive.local
+  - host: #megadrive.local
     http:
       paths:
-      - path: /it-tools/(.*)
+      - path: /it-tools(/|$)(.*)
         pathType: Prefix
         backend:
           service:
             name: it-tools-service
             port:
               number: 80
+
 
